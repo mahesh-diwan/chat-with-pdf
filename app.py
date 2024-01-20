@@ -73,25 +73,18 @@ def main():
             docs = VectoreStores.similarity_search(query,k=3)
             st.write(docs)
 
-
-model_name = "deepset/roberta-base-squad2"
-
-# a) Get predictions
-nlp = pipeline('question-answering', model=model_name, tokenizer=model_name)
-QA_input = {
-    'question': query,
-    'context': docs[0]
-}
-res = nlp(QA_input)
-
-st.write(res['answer'])
-
         
+        model_name = "deepset/roberta-base-squad2"
         
-            
-
-            
-            
+        # a) Get predictions
+        nlp = pipeline('question-answering', model=model_name, tokenizer=model_name)
+        QA_input = {
+            'question': query,
+            'context': docs[0]
+        }
+        res = nlp(QA_input)
+        
+        st.write(res['answer'])
 
                 
 if __name__ == '__main__':
