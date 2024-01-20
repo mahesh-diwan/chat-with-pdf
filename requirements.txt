@@ -9,3 +9,6 @@ altair<5
 tiktoken
 pickle5
 python-dotenv
+transformers
+sentence_transformers
+
