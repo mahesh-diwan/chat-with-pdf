@@ -11,4 +11,7 @@ pickle5
 python-dotenv
 transformers
 sentence_transformers
+os
+
+
 
