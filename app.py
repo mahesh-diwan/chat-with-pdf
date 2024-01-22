@@ -5,9 +5,9 @@ from  PyPDF2 import PdfReader
 from streamlit_extras.add_vertical_space import add_vertical_space
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 import os
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.embeddings import OpenAIEmbeddings
-from langchain.vectorstores import FAISS
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.embeddings import OpenAIEmbeddings
+from langchain_community.vectorstores import FAISS
 from sentence_transformers import SentenceTransformer
 from transformers import AutoModelForQuestionAnswering, AutoTokenizer, pipeline
 
