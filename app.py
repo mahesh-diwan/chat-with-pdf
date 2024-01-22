@@ -65,7 +65,7 @@ def main():
             if os.path.exists(f"{store_name}.pkl"):
                 with open(f"{store_name}.pkl","rb") as f:
                     VectoreStore = pickle.load(f)
-                st.write("Reading from disk")
+                # st.write("Reading from disk")
 
             else:
                 # embeddings = OpenAIEmbeddings()
