@@ -2,7 +2,7 @@ import streamlit as st
 import pickle 
 from dotenv import load_dotenv
 from  PyPDF2 import PdfReader 
-from streamlit_extras.add_vertical_space import add_vertical_space
+# from streamlit_extras.add_vertical_space import add_vertical_space
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 import os
 from langchain_community.embeddings import HuggingFaceEmbeddings
@@ -23,7 +23,8 @@ with st.sidebar:
        - [OpenAi](https://platform.openaicom/docs/models)        
         
     ''')
-    add_vertical_space(5)
+    # add_vertical_space(5)
+    
     st.write("Made by Mahesh by following a reference video uploaded on youtube")
     
 def main():
