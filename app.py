@@ -25,7 +25,7 @@ with st.sidebar:
     ''')
     # add_vertical_space(5)
     
-    st.write("Made by Mahesh by following a reference video uploaded on youtube")
+    st.write("Made by Mahesh")
     
 def main():
         st.header("Chat with PDF")
