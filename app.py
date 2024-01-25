@@ -16,7 +16,7 @@ with st.sidebar:
     st.title("Chat With Pdf")
     st.markdown(
         '''
-        ## About
+        # About
        This app is an LLM powered chatbot built using :
        - [Streamlit](https://streamlit.io/)        
        - [LangChain](https://python.langchain.com/)        
