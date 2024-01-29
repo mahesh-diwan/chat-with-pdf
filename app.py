@@ -20,7 +20,7 @@ with st.sidebar:
        This app is an LLM powered chatbot built using :
        - [Streamlit](https://streamlit.io/)        
        - [LangChain](https://python.langchain.com/)        
-       - [OpenAi](https://platform.openaicom/docs/models)        
+       - [HuggingFace](https://huggingface.co/)        
         
     ''')
     # add_vertical_space(5)
