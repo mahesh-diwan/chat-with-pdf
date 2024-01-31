@@ -56,7 +56,7 @@ def main():
             
             chunks = text_splitter.split_text(text=text)
             
-            # st.write(chunks)
+             st.write(chunks)
             
             # Embeddings 
             store_name=pdf.name[:-4]
