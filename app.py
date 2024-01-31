@@ -44,7 +44,7 @@ def main():
                 for page in pdf_reader.pages:
                     text += page.extract_text()
             
-            # st.write(text)
+            st.write(text)
             
             
             text_splitter=RecursiveCharacterTextSplitter(
