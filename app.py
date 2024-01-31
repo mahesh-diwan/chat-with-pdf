@@ -44,7 +44,7 @@ def main():
                 for page in pdf_reader.pages:
                     text += page.extract_text()
             
-            st.write(text)
+            #st.write(text)
             
             
             text_splitter=RecursiveCharacterTextSplitter(
@@ -56,7 +56,7 @@ def main():
             
             chunks = text_splitter.split_text(text=text)
             
-            st.write(chunks)
+            #st.write(chunks)
             
             # Embeddings 
             store_name=pdf.name[:-4]
