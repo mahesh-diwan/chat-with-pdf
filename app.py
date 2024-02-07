@@ -21,7 +21,7 @@ with st.sidebar:
        - [Streamlit](https://streamlit.io/)        
        - [LangChain](https://python.langchain.com/)        
        - [HuggingFace](https://huggingface.co/)        
-        
+
     ''')
     # add_vertical_space(5)
     
@@ -34,10 +34,6 @@ def main():
         
         # upload a pdf 
         pdf = st.file_uploader("Upload your PDF file" , type="pdf")
-        with open(pdf, "rb") as f:
-            dpdf = base64.b64encode(f.read()).decode('utf-8')
-        pdf_display = F'<embed src="data:application/pdf;base64,{dpdf}" width="700" height="1000" type="application/pdf">'
-        st.markdown(pdf_display, unsafe_allow_html=True)
 
         # st.write(pdf)
         if pdf :
