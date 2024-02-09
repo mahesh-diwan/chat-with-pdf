@@ -1,4 +1,4 @@
-openai==0.28.1
+
 langchain==0.0.330
 langchain-community
 pyPDF2==3.0.1
@@ -9,7 +9,6 @@ streamlit-extras
 altair<5
 tiktoken
 pickle5
-python-dotenv
 transformers
 sentence_transformers
 
