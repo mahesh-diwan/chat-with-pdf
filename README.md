@@ -33,8 +33,8 @@ Follow these steps to set up and run the project locally:
 
 1. Clone the repository:
    ```bash
-   git clone <repository_url>
-   cd <repository_folder>
+   git clone https://github.com/mahesh-diwan/chat-with-pdf.git
+   cd chat-with-pdf
    ```
 
 2. Create a virtual environment:
