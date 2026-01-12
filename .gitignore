@@ -1,0 +1,40 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+.venv/
+.env/
+
+# Environment variables
+*.env
+
+# Streamlit specific
+.streamlit/
+
+# macOS
+.DS_Store
+
+# Logs and temp files
+*.log
+*.tmp
+*.bak
+
+# VSCode settings
+.vscode/
+
+# PyCharm
+.idea/
+
+# FAISS index files (if you save them locally)
+*.index
+*.npy
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# OS files
+Thumbs.db

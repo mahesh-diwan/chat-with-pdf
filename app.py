@@ -1,110 +1,64 @@
 import streamlit as st
-import pickle 
-from dotenv import load_dotenv
-from  PyPDF2 import PdfReader 
-# from streamlit_extras.add_vertical_space import add_vertical_space
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-import os
-from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain_community.embeddings import OpenAIEmbeddings
-from langchain_community.vectorstores import FAISS
-from sentence_transformers import SentenceTransformer
-from transformers import AutoModelForQuestionAnswering, AutoTokenizer, pipeline
+from config import SYSTEM_PROMPT
+from ui import load_styles, display_chat
+from pdf_processor import read_pdf, chunk_text
+from embeddings import load_model, build_index
+from ai_engine import ask_gemini
+from utils import timestamp
 
-# Sidebar Contents
-with st.sidebar:
-    st.title("Chat With Pdf")
-    st.markdown(
-        '''
-        ## About
-       This app is an LLM powered chatbot built using :
-       - [Streamlit](https://streamlit.io/)        
-       - [LangChain](https://python.langchain.com/)        
-       - [HuggingFace](https://huggingface.co/)        
+st.set_page_config(page_title="SPECTRE", page_icon="🌌", layout="wide")
+load_styles()
 
-    ''')
-    # add_vertical_space(5)
-    
-    st.write("Made by Mahesh")
-    
-def main():
-        st.header("Chat with PDF")
-        
-        load_dotenv()
-        
-        # upload a pdf 
-        pdf = st.file_uploader("Upload your PDF file" , type="pdf")
+st.markdown("<h1 style='color:#38bdf8;font-weight:700;font-size:2.5rem'>SPECTRE</h1><p>AI Document Intelligence Chat</p>", unsafe_allow_html=True)
 
-        # st.write(pdf)
-        if pdf :
-            pdf_reader=PdfReader(pdf);
-        
-            text = ""
-            if pdf_reader is not None:
-                for page in pdf_reader.pages:
-                    text += page.extract_text()
-            
-            #st.write(text)
-            
-            
-            text_splitter=RecursiveCharacterTextSplitter(
-                chunk_size=1000,
-                chunk_overlap=200,
-                length_function=len
-                
-                )
-            
-            chunks = text_splitter.split_text(text=text)
-            
-            #st.write(chunks)
-            
-            # Embeddings 
-            store_name=pdf.name[:-4]
+# ---------------- SESSION ----------------
+if "index" not in st.session_state:
+    st.session_state.index = None
+    st.session_state.texts = None
+if "chat" not in st.session_state:
+    st.session_state.chat = []
 
+# ---------------- PDF UPLOAD ----------------
+with st.expander("📄 Upload PDF Document", expanded=True):
+    file = st.file_uploader("Upload PDF", type="pdf")
 
-            if os.path.exists(f"{store_name}.pkl"):
-                with open(f"{store_name}.pkl","rb") as f:
-                    VectoreStore = pickle.load(f)
-                # st.write("Reading from disk")
+    if file and st.session_state.index is None:
+        text = read_pdf(file)
+        chunks = chunk_text(text)
+        model = load_model()
+        index, _ = build_index(chunks, model)
+        st.session_state.index = index
+        st.session_state.texts = chunks
+        st.success("Document indexed successfully!")
 
-            else:
-                # embeddings = OpenAIEmbeddings()
-                embeddings = HuggingFaceEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2')
-                VectoreStore = FAISS.from_texts(chunks,embedding=embeddings)
-                with open(f"{store_name}.pkl","wb") as f :
-                    pickle.dump(VectoreStore,f)
+from ui import display_chat, load_styles, display_typing
 
-            # Questions
-            query = st.text_input("Ask Questions about your pdf file")  
-            # st.write(query)
+# ---------------- CHAT ----------------
+display_chat(st.session_state.chat)
 
+if st.session_state.index:
+    query = st.text_input("Ask about the document", key="query_input")
 
-            if query :
-                docs = VectoreStore.similarity_search(query,k=3)
-                # st.write(docs)
-                model_name = "deepset/roberta-base-squad2"
-                
-                # b) Load model & tokenizer
-                model = AutoModelForQuestionAnswering.from_pretrained(model_name)
-                tokenizer = AutoTokenizer.from_pretrained(model_name)
+    if query:
+        st.session_state.chat.append({"role":"user", "content": query, "time": timestamp()})
+        display_chat(st.session_state.chat)  # show user input immediately
 
-                # a) Get predictions
-                nlp = pipeline('question-answering', model=model_name, tokenizer=model_name)
+        # Retrieve relevant chunks
+        model = load_model()
+        q_emb = model.encode([query]).astype("float32")
+        _, I = st.session_state.index.search(q_emb, k=8)
+        context = "\n\n".join(st.session_state.texts[i] for i in I[0])
 
-                context=str(docs[0])
-                # st.write(context)
+        # Get AI answer with typing animation
+        with st.spinner("🤖 Thinking..."):
+            answer = ask_gemini(query, context)
 
-                QA_input = {
-                    'question': query,
-                    'context': context
-                }
+        st.session_state.chat.append({"role":"assistant", "content": answer, "time": timestamp()})
+        display_typing(answer, role="assistant")  # animated output
 
-                res = nlp(QA_input)
+        # Expandable sources
+        st.markdown(f"""
+        <details>
+        <summary style="color:#38bdf8;font-size:13px;cursor:pointer">Show source snippets (optional)</summary>
+        <div class='source-container'>""" + "\n\n".join(st.session_state.texts[i][:500]+"..." for i in I[0]) + "</div></details>", unsafe_allow_html=True)
 
-                
-                # st.write(res)
-                st.write(res['answer'])
-
-                
-if __name__ == '__main__':
-    main()
