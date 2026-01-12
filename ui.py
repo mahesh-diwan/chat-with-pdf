@@ -5,37 +5,39 @@ import time
 def load_styles():
     st.markdown("""
     <style>
+    /* ---------- GLOBAL ---------- */
     html, body {
         background: #0b0b0b;
         color: #e5e7eb;
-        font-family: Inter, system-ui, sans-serif;
+        font-family: 'Sora', 'Space Grotesk', 'JetBrains Mono', Inter, system-ui, sans-serif;
     }
 
     /* ---------- TITLE ---------- */
     .app-title {
-        font-size: 2.1rem;
+        font-size: 2.2rem;
         font-weight: 600;
         letter-spacing: 0.05em;
-        margin-bottom: 0.2rem;
+        margin-bottom: 0.3rem;
     }
 
     .app-subtitle {
-        font-size: 0.75rem;
+        font-size: 0.8rem;
         color: #9ca3af;
-        margin-bottom: 1.2rem;
-        letter-spacing: 0.18em;
+        margin-bottom: 1.5rem;
+        letter-spacing: 0.15em;
         text-transform: uppercase;
     }
 
     /* ---------- BUTTONS ---------- */
     .stButton > button {
         height: 38px;
-        font-size: 0.7rem;
-        letter-spacing: 0.12em;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
         background: #0f172a;
         border: 1px solid #1f2937;
         color: #9ca3af;
-        border-radius: 4px;
+        border-radius: 6px;
+        transition: 0.2s;
     }
 
     .stButton > button:hover {
@@ -43,47 +45,62 @@ def load_styles():
         color: #e5e7eb;
     }
 
-    /* ---------- POPOVER ---------- */
-    div[data-testid="stPopover"] button {
-        height: 38px;
-        font-size: 0.7rem;
-        letter-spacing: 0.12em;
+    /* ---------- CHAT ---------- */
+    .chat-line {
+        padding: 0.65rem 0.9rem;
+        border-radius: 6px;
+        background-color: #1f2937;
+        margin-bottom: 0.5rem;
+        word-wrap: break-word;
+        transition: background 0.2s;
+        font-family: 'Sora', sans-serif;
     }
 
-    /* ---------- FILE UPLOADER ---------- */
-    div[data-testid="stFileUploader"] {
-        padding: 0 !important;
-        margin: 0 !important;
+    .chat-line:hover {
+        background-color: #272e3d;
+    }
+
+    .chat-user {
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+        color: #9ca3af;
+        font-weight: 500;
+        margin-bottom: 0.15rem;
+    }
+
+    .chat-text {
+        font-size: 0.875rem;
+        line-height: 1.5;
+        color: #e5e7eb;
+    }
+
+    /* ---------- SOURCE SNIPPET (unchanged) ---------- */
+    .source-snippet {
+        background-color: #111827;
+        color: #e5e7eb;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.82rem;
+        padding: 0.6rem 0.8rem;
+        border-radius: 6px;
+        margin-bottom: 0.5rem;
+        border-left: 3px solid #4f46e5;
+        overflow-wrap: break-word;
+        line-height: 1.5;
     }
 
     /* ---------- DOCUMENT STATUS ---------- */
     .doc-name {
-        font-size: 0.85rem;
+        font-size: 0.9rem;
         color: #e5e7eb;
         padding-top: 8px;
+        font-weight: 500;
     }
 
     .doc-muted {
-        font-size: 0.85rem;
+        font-size: 0.9rem;
         color: #6b7280;
         padding-top: 8px;
-    }
-
-    /* ---------- CHAT ---------- */
-    .chat-line {
-        padding: 0.6rem 0;
-        border-bottom: 1px solid #1f2933;
-    }
-
-    .chat-user {
-        font-size: 0.65rem;
-        letter-spacing: 0.1em;
-        color: #9ca3af;
-    }
-
-    .chat-text {
-        margin-top: 0.2rem;
-        line-height: 1.6;
+        font-weight: 500;
     }
     </style>
     """, unsafe_allow_html=True)

@@ -1,8 +1,15 @@
+# ==================== requirements.txt ====================
+# Core application
 streamlit>=1.30.0
-pypdf>=3.12.0
-sentence-transformers>=2.2.2
-faiss-cpu>=1.7.4
-google-generativeai>=0.1.2
 python-dotenv>=1.0.0
 numpy>=1.26.0
-PyPDF2
+
+# PDF processing
+PyPDF2>=3.0.0
+
+# Embeddings & retrieval
+sentence-transformers>=2.2.2
+faiss-cpu>=1.7.4
+
+# LLM provider (free-tier, fast inference)
+groq>=0.9.0
